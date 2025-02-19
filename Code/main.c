@@ -1,18 +1,15 @@
 #include <stdio.h>
+double getMile(int km, int m) {
+    double mile = (km + m/1000.0)/1.609;
+    return mile;
+}
+void compute(int km, int m) {
+    double mile = getMile(km, m);
+    int yard, mile_i = mile;
+    yard = (mile-mile_i)*1760;
+    printf("mile = %d, yard = %d\n", mile_i, yard);
+}
 int main() {
-    int x,y,z;
-    x = y = z = 0;
-    /* testing the increment by 1 */
-    x = ++y + ++z;
-    printf("\1: line 14 result ... %d %d %d\n",x,y,z);
-    x = y++ + z++;
-    printf("\2: line 16 result ... %d %d %d\n",x,y,z);
-    /* testing the decrement by 1 */
-    x = y = z = 0;
-    x = --y + --z;
-    printf("\1: line 20 result ... %d %d %d\n",x,y,z);
-    x = y-- + z--;
-    printf("\2: line 22 result ... %d %d %d\n",x,y,z);
-
-    printf("\1 1");
+    compute(5, 500);
+    return 0;
 }
