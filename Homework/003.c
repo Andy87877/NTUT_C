@@ -40,6 +40,7 @@ int judge_ERROR(int set_0, int set_1, char element_1, char element_2){
     return ERROR;
 }
 
+// 元素的位置
 int element_index(char element){
     int index = 0;
     char check_str[6] = "fedcba";
@@ -52,6 +53,7 @@ int element_index(char element){
     return index;
 }
 
+// 數字轉集合元素
 void set_to_Array(int arr_set[], int check_set){
     for (int i = 0; i < 6; i++) {
         arr_set[i] = 0;  // 確保初始為 0
@@ -64,6 +66,7 @@ void set_to_Array(int arr_set[], int check_set){
     }
 }
 
+// 製作set2
 int make_set2(int set_1, char index_element_1){
     /*
     判斷set1的element_1 有沒有已經存在了
@@ -84,6 +87,7 @@ int make_set2(int set_1, char index_element_1){
     return set_2;
 }
 
+// 輸出集合
 void print_array(int arr_set[]){
     for (int i = 0; i < 6; i++){
         printf("%d ", arr_set[i]);
@@ -91,73 +95,84 @@ void print_array(int arr_set[]){
     printf("\n");
 }
 
-void question_1(int arr_set_2[], int index_element_2){
-    // 第一行輸出集合元素e2是否為集合S2，如果是，輸出"Y"，如果不是，則輸出"N"
-    if (arr_set_2[index_element_2] == 1){
-        printf("Y\n");
-    } else {
-        printf("N\n");
-    }
-}
-
-void question_2(int arr_set_0[], int arr_set_2[]){
-    // 第二行輸出集合S2是否屬於集合S0的子集合，如果是，輸出"Y"，如果不是，則輸出"N"
-    int check = 1;
-    for (int i = 0; i < 6; i++){
-        // 集合S2有個元素不再S0裡面
-        if (arr_set_2[i] == 1 && arr_set_0[i] == 0){
-            check = 0;
-            break;
+// 判斷答案
+void All_question(int arr_set_0[], int arr_set_2[], int index_element_2){
+    void question_1(int arr_set_2[], int index_element_2){
+        // 第一行輸出集合元素e2是否為集合S2，如果是，輸出"Y"，如果不是，則輸出"N"
+        if (arr_set_2[index_element_2] == 1){
+            printf("Y\n");
+        } else {
+            printf("N\n");
         }
     }
-    if (check){
-        printf("Y\n");
-    } else {
-        printf("N\n");
-    }
-}
-
-void question_3(int arr_set_0[], int arr_set_2[]){
-    // 第三行輸出集合S0和集合S2的交集集合整數，
-    int answer_number = 0;
-    for (int i = 0; i < 6; i++){
-        if (arr_set_2[i] == 1 && arr_set_0[i] == 1){
-            answer_number += (1 << 5-i);
+    
+    void question_2(int arr_set_0[], int arr_set_2[]){
+        // 第二行輸出集合S2是否屬於集合S0的子集合，如果是，輸出"Y"，如果不是，則輸出"N"
+        int check = 1;
+        for (int i = 0; i < 6; i++){
+            // 集合S2有個元素不再S0裡面
+            if (arr_set_2[i] == 1 && arr_set_0[i] == 0){
+                check = 0;
+                break;
+            }
+        }
+        if (check){
+            printf("Y\n");
+        } else {
+            printf("N\n");
         }
     }
-    printf("%d\n", answer_number);
-}
-
-void question_4(int arr_set_0[], int arr_set_2[]){
-    // 第四行輸出集合S0和集合S2的聯集集合整數。
-    int answer_number = 0;
-    for (int i = 0; i < 6; i++){
-        if (arr_set_2[i] == 1 || arr_set_0[i] == 1){
-            answer_number += (1 << 5-i);
+    
+    void question_3(int arr_set_0[], int arr_set_2[]){
+        // 第三行輸出集合S0和集合S2的交集集合整數，
+        int answer_number = 0;
+        for (int i = 0; i < 6; i++){
+            if (arr_set_2[i] == 1 && arr_set_0[i] == 1){
+                answer_number += (1 << 5-i);
+            }
         }
+        printf("%d\n", answer_number);
     }
-    printf("%d\n", answer_number);
-}
-
-void question_5(int arr_set_0[], int arr_set_2[]){
-    // 第五行輸出集合S0和集合S2的差集集合整數。
-    int answer_number = 0;
-    for (int i = 0; i < 6; i++){
-        if (arr_set_2[i] == 0 && arr_set_0[i] == 1){
-            answer_number += (1 << 5-i);
+    
+    void question_4(int arr_set_0[], int arr_set_2[]){
+        // 第四行輸出集合S0和集合S2的聯集集合整數。
+        int answer_number = 0;
+        for (int i = 0; i < 6; i++){
+            if (arr_set_2[i] == 1 || arr_set_0[i] == 1){
+                answer_number += (1 << 5-i);
+            }
         }
+        printf("%d\n", answer_number);
     }
-    printf("%d\n", answer_number);
+    
+    void question_5(int arr_set_0[], int arr_set_2[]){
+        // 第五行輸出集合S0和集合S2的差集集合整數。
+        int answer_number = 0;
+        for (int i = 0; i < 6; i++){
+            if (arr_set_2[i] == 0 && arr_set_0[i] == 1){
+                answer_number += (1 << 5-i);
+            }
+        }
+        printf("%d\n", answer_number);
+    }
+    
+    question_1(arr_set_2, index_element_2);
+    question_2(arr_set_0, arr_set_2);
+    question_3(arr_set_0, arr_set_2);
+    question_4(arr_set_0, arr_set_2);
+    question_5(arr_set_0, arr_set_2);
 }
 
 int main(){
-    int set_0, set_1, set_2;
+    int set_0, set_1, set_2; // 數字
+    
+    // 集合元素 {f,e,d,c,b,a} --> {0,0,0,0,0,0} 0沒有 1有
     int arr_set_0[6] = {0};
     int arr_set_1[6] = {0};
     int arr_set_2[6] = {0};
 
-    char element_1, element_2;
-    int index_element_1, index_element_2;
+    char element_1, element_2; // 元素
+    int index_element_1, index_element_2; // 元素位置
 
     scanf("%d", &set_0);
     scanf("%d", &set_1);
@@ -183,11 +198,7 @@ int main(){
     // print_array(arr_set_1);
     // print_array(arr_set_2);
     
-    question_1(arr_set_2, index_element_2);
-    question_2(arr_set_0, arr_set_2);
-    question_3(arr_set_0, arr_set_2);
-    question_4(arr_set_0, arr_set_2);
-    question_5(arr_set_0, arr_set_2);
+    All_question(arr_set_0, arr_set_2, index_element_2);
 }
 
 /*

@@ -25,7 +25,7 @@ int get_BMI(int kg, int cm){
     //保留小數點後一位
     int BMI = (int)BMI_float;
     if (BMI%10 == 5){
-        if (((BMI%100)/10) % 2 == 0){ //整數是奇數
+        if (((BMI%100)/10) % 2 == 0){ //整數是偶數
             BMI += 10;
         }
     } else if (BMI%10 >= 6){
