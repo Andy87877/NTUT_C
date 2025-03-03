@@ -1,3 +1,4 @@
+// 判斷整數、浮點數、字串
 #include <stdio.h>
 void f() {
     int ret;

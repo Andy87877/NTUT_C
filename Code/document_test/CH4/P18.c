@@ -1,3 +1,4 @@
+// getche() 測試
 #include <stdio.h>
 int main() {
     int i=0;
