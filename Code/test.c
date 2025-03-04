@@ -1,23 +1,9 @@
 #include <stdio.h>
-void f() {
-    int ret;
-    float n;
-    while (1) {
-        printf("Integer? ");
-        ret=scanf("%f", &n);
-        if (ret == 0) {
-            printf("char!\n");
-        while(getchar()!='\n');
-            continue;
-        }
-        if (ret==1 && n != (int)n) {
-            printf("float!\n");
-            continue;
-        }
-        printf("OK\n");
-    }
-}
-int main() {
-    f();
-    return 0;
+
+int main(){
+    int a,b;
+    scanf("%d %d", &a, &b);
+    double Area = (a*b)/2.0;
+
+    printf("Triangle area:%.1f\n", Area);
 }
