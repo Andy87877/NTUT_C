@@ -4,6 +4,7 @@
         "stdlib.h": "c",
         "stdio.h": "c",
         "xutility": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "xlocale": "c"
     }
 }
