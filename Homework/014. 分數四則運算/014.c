@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int abs(int n){
-    if (n < 0) return n*-1;
+int abs(int n) {
+    if (n < 0) return n * -1;
     return n;
 }
 
@@ -64,7 +64,7 @@ void Output_answer(int upper, int lower) {
     }
 
     real_number = upper / lower;
-    upper -= real_number*lower;
+    upper -= real_number * lower;
 
     // printf("%d %d %d\n", real_number, upper, lower);
     if (real_number == 0) {
@@ -116,11 +116,11 @@ void Compute(int upper_1, int lower_1, int upper_2, int lower_2,
         printf("Error\n");
         return;
     }
-    if (lower_answer == 0){
+    if (lower_answer == 0) {
         printf("Error\n");
         return;
     }
-    if (upper_answer == 0){
+    if (upper_answer == 0) {
         printf("0\n");
         return;
     }
@@ -155,7 +155,8 @@ void Input_data() {
         printf("Error\n");
         return;
     }
-    // printf("Compute: %d, %d, %d, %d, %c\n", upper_1, lower_1, upper_2, lower_2, operater);
+    // printf("Compute: %d, %d, %d, %d, %c\n", upper_1, lower_1, upper_2,
+    // lower_2, operater);
     Compute(upper_1, lower_1, upper_2, lower_2, operater);
 }
 
