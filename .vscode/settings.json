@@ -3,6 +3,8 @@
         "time.h": "c",
         "stdlib.h": "c",
         "stdio.h": "c",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "cmath": "cpp",
+        "xlocale": "c"
     }
 }
