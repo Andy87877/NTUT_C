@@ -5,6 +5,8 @@
         "stdio.h": "c",
         "xutility": "cpp",
         "cmath": "cpp",
-        "xlocale": "c"
+        "xlocale": "c",
+        "vector": "c",
+        "xstring": "c"
     }
 }
