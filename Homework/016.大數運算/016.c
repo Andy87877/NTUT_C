@@ -29,7 +29,7 @@ void Print_answer(int array[], int size) {
 }
 
 // array都是零
-void Get_all_zero_array(int *array[], int size) {
+void Get_all_zero_array(int array[], int size) {
     for (int i = 0; i < size; i++) {
         array[i] = 0;
     }
@@ -50,7 +50,7 @@ int Change_negative(int number) {
 }
 
 // 得到轉換後每一位的數字
-void Get_number_array(char origin_input[], int *number_array[], int negative,
+void Get_number_array(char origin_input[], int number_array[], int negative,
                       int number_size) {
     int index_end = negative + number_size;
     for (int i = negative; i < index_end; i++) {
@@ -61,7 +61,7 @@ void Get_number_array(char origin_input[], int *number_array[], int negative,
 }
 
 // 數字反轉
-void Get_reverse_array(int number_array[], int *reverse_array[],
+void Get_reverse_array(int number_array[], int reverse_array[],
                        int number_size) {
     Get_all_zero_array(reverse_array, number_size);
     for (int i = 0; i < number_size; i++) {
@@ -191,7 +191,7 @@ void MINUS_function(int Minus_array[], int number_array_1[],
 }
 
 // 多位*一位數的計算(乘法) 是反向的
-void Mul_single_function(int *mul_single_array[], int number_array_1[],
+void Mul_single_function(int mul_single_array[], int number_array_1[],
                          int number_size_1, int now_mul_number,
                          int number2_index) {
     int number1_index = 0; // 處理到的index位置
@@ -229,7 +229,7 @@ void MUL_function(int Mul_array[], int number_array_1[], int number_array_2[],
         int now_mul_number = number_array_2[number2_index];
 
         // 單行的乘法
-        Mul_single_function(&mul_single_array, number_array_1, number_size_1,
+        Mul_single_function(mul_single_array, number_array_1, number_size_1,
                             now_mul_number, number2_index);
 
         int mul_size = number_size_1 + number2_index + 1;
@@ -262,26 +262,26 @@ void Judge_all_function(char origin_input_1[], char origin_input_2[]) {
 
     // 數字array
     int number_array_1[MAX_SIZE], number_array_2[MAX_SIZE];
-    Get_number_array(origin_input_1, &number_array_1, origin_negative_1,
+    Get_number_array(origin_input_1, number_array_1, origin_negative_1,
                      number_size_1);
-    Get_number_array(origin_input_2, &number_array_2, origin_negative_2,
+    Get_number_array(origin_input_2, number_array_2, origin_negative_2,
                      number_size_2);
 
     // 反轉數字array
     int reverse_array_1[MAX_SIZE], reverse_array_2[MAX_SIZE];
-    Get_reverse_array(number_array_1, &reverse_array_1, number_size_1);
-    Get_reverse_array(number_array_2, &reverse_array_2, number_size_2);
-    
+    Get_reverse_array(number_array_1, reverse_array_1, number_size_1);
+    Get_reverse_array(number_array_2, reverse_array_2, number_size_2);
+
     // 加法運算
     int Add_array[MAX_SIZE];
     int Add_array_size = number_size_max + 1;
 
     if (origin_negative_1 == origin_negative_2) {
         if (origin_negative_1 == 1) printf("-");
-        ADD_function(&Add_array, reverse_array_1, reverse_array_2,
-                     number_size_1, number_size_2,0);
+        ADD_function(Add_array, reverse_array_1, reverse_array_2, number_size_1,
+                     number_size_2, 0);
     } else {
-        MINUS_function(&Add_array, reverse_array_1, reverse_array_2,
+        MINUS_function(Add_array, reverse_array_1, reverse_array_2,
                        number_size_1, number_size_2, origin_negative_1,
                        origin_negative_2);
     }
@@ -292,16 +292,15 @@ void Judge_all_function(char origin_input_1[], char origin_input_2[]) {
     int Minus_array_size = Add_array_size;
 
     if (origin_negative_1 == origin_negative_2) {
-        MINUS_function(&Minus_array, reverse_array_1, reverse_array_2,
+        MINUS_function(Minus_array, reverse_array_1, reverse_array_2,
                        number_size_1, number_size_2, origin_negative_1,
                        Change_negative(origin_negative_2));
     } else {
         if (origin_negative_1 == 1) printf("-");
-        ADD_function(&Minus_array, reverse_array_1, reverse_array_2,
-                     number_size_1, number_size_2,0);
+        ADD_function(Minus_array, reverse_array_1, reverse_array_2,
+                     number_size_1, number_size_2, 0);
     }
     Print_answer(Minus_array, Minus_array_size);
-    
 
     // 乘法運算
     int Mul_array[MAX_SIZE];
@@ -309,7 +308,7 @@ void Judge_all_function(char origin_input_1[], char origin_input_2[]) {
 
     // 正負 或 負正 得負
     if (origin_negative_1 != origin_negative_2) printf("-");
-    MUL_function(&Mul_array, reverse_array_1, reverse_array_2, number_size_1,
+    MUL_function(Mul_array, reverse_array_1, reverse_array_2, number_size_1,
                  number_size_2, Mul_array_size);
     Print_answer(Mul_array, Mul_array_size);
 }
