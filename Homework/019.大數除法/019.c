@@ -31,6 +31,13 @@ void All_zero_array(int array[], int size) {
     }
 }
 
+void Copy_array(int array_goal[], int array[], int size) {
+    All_zero_array(array_goal, size);
+    for (int i = 0; i < size; i++) {
+        array_goal[i] = array[i];
+    }
+}
+
 // 字元轉數字 return size
 int str_to_num(char str[], int array[]) {
     int size = 0;
@@ -64,12 +71,19 @@ void Reverse_number(int reverse_array[], int array[], int size) {
 }
 
 // 加法功能
-void Add_function(int array_answer[], int array_1[], int array_2[], int size_1,
-                  int size_2) {}
+void Add_function(int array_answer[], int array_1[], int array_2[], int size) {
+    int sum = 0, carry = 0;
+    for (int i = 0; i < size; i++) {
+        sum = array_1[i] + array_2[i] + carry;
+        carry = sum / 10;
+        sum %= 10;
+        array_answer[i] = sum;
+    }
+}
 
-void Mul_single_function(int single_mul_array[], int array_reverse_1[], int number_2, int size_1, int index_shift){
-    int single_mul_reverse_array[MAX_SIZE];
-    All_zero_array(single_mul_array, MAX_SIZE);
+// 單行的乘法 回傳反轉的乘法
+void Mul_single_function(int single_mul_reverse_array[], int array_reverse_1[],
+                         int number_2, int size_1, int index_shift) {
     All_zero_array(single_mul_reverse_array, MAX_SIZE);
 
     int sum = 0, carry = 0; // 總和&進位
@@ -79,43 +93,92 @@ void Mul_single_function(int single_mul_array[], int array_reverse_1[], int numb
         if (size_1 != i) number_1 = array_reverse_1[i];
 
         sum = (number_1 * number_2) + carry; // 加總
-        carry = sum / 10; // 進位
-        sum %= 10;        // 當下的數字
+        carry = sum / 10;                    // 進位
+        sum %= 10;                           // 當下的數字
 
         single_mul_reverse_array[i + index_shift] = sum;
     }
-    Reverse_number(single_mul_array, single_mul_reverse_array, MAX_SIZE);
+}
+
+// 移除前面都是0的array
+void Remove_frontZero_array(int array_goal[], int array[], int size) {
+    All_zero_array(array_goal, size);
+    int front_index = 0;
+    int front_all_zero = 1;
+    for (int i = 0; i < size; i++) {
+        if (front_all_zero && array[i] != 0) {
+            front_index = i;
+        }
+        if (array[i] != 0) front_all_zero = 0;
+        if (front_all_zero == 0) {
+            array_goal[i - front_index] = array[i];
+        }
+    }
 }
 
 // 乘法功能
 void Mul_function(int array_answer[], int array_1[], int array_2[], int size_1,
                   int size_2) {
+    int array_reverse_answer[MAX_SIZE];
     All_zero_array(array_answer, MAX_SIZE);
+    All_zero_array(array_reverse_answer, MAX_SIZE);
 
     int array_reverse_1[MAX_SIZE], array_reverse_2[MAX_SIZE];
     Reverse_number(array_reverse_1, array_1, size_1);
     Reverse_number(array_reverse_2, array_2, size_2);
 
     // 乘法運算
-    for (int i = 0; i < size_2; i++){
+    for (int i = 0; i < size_2; i++) {
         // 單行乘法
-        int single_mul_array[MAX_SIZE];
+        int single_mul_reverse_array[MAX_SIZE];
         int number_2 = array_reverse_2[i];
-        Mul_single_function(single_mul_array, array_reverse_1, number_2, size_1, i);
-        Print_nonezero_array(single_mul_array, MAX_SIZE);
+        Mul_single_function(single_mul_reverse_array, array_reverse_1, number_2,
+                            size_1, i);
+
+        Add_function(array_reverse_answer, array_reverse_answer,
+                     single_mul_reverse_array, MAX_SIZE);
     }
+
+    Reverse_number(array_answer, array_reverse_answer, MAX_SIZE);
     
 }
 
 // 尋找商數 (now_被除數 >= 除數) 一定大於等於1
 int Find_q(int now_a[], int k_number[], int a_size, int k_size) {
+    // printf("Find_q=======\n");
+    Print_array(now_a, MAX_SIZE);
+    // printf("\n");
     // 商數
-    for (int q = 1; q <= 9; q++) {
-        int now_k[MAX_SIZE]; // 除數 * 商數 的值
-        All_zero_array(now_k, MAX_SIZE);
+    int find_q = 1;
 
-        Mul_function(now_k, now_a, k_number, a_size, k_size);
+    for (int q = 1; q <= 9; q++) {
+        int tmp_q[1] = {q};
+        int now_k[MAX_SIZE], tmp_k[MAX_SIZE]; // 除數 * 商數 的值
+        All_zero_array(now_k, MAX_SIZE);
+        All_zero_array(tmp_k, MAX_SIZE);
+
+        // Print_array(k_number, MAX_SIZE);
+        // printf("*%d\n", q);
+
+        Mul_function(tmp_k, k_number, tmp_q, MAX_SIZE, 1);
+        
+        Copy_array(now_k, tmp_k, MAX_SIZE);
+        Copy_array(tmp_k, now_k, MAX_SIZE);
+        Remove_frontZero_array(now_k, tmp_k, MAX_SIZE);
+
+        // printf("=\n");
+        Print_array(now_k, MAX_SIZE);
+        int a_bigger; // 判斷當下的除式有沒有比被除式大 如果是回傳1
+        a_bigger = Compare_a_or_k_bigger(now_a, now_k, MAX_SIZE, MAX_SIZE);
+        printf("%d\n", a_bigger);
+
+        // 當下的乘法 大於 除數 * 商數 的值
+        if (a_bigger != 1) {
+            find_q = q+1;
+            break;
+        }
     }
+    return find_q-1;
 }
 
 // 判斷 (a代表被除數，k代表非零除數，q代表商數)
@@ -137,11 +200,11 @@ void Judge(int a_number[], int k_number[], int a_size, int k_size) {
             if (now_index + 1 >= k_size) { // 判斷的當下被除數 大於等於 除數
                 a_bigger = Compare_a_or_k_bigger(now_a_number, k_number,
                                                  now_index + 1, k_size);
-            }
-
-            int now_q = 0; // 找到的商數
-            if (a_bigger) {
-                now_q = Find_q(now_a_number, k_number, a_size, k_size);
+                int now_q = 0; // 找到的商數
+                if (a_bigger) {
+                    now_q = Find_q(now_a_number, k_number, a_size, k_size);
+                    printf("%d\n", now_q);
+                }
             }
         }
     }
@@ -160,9 +223,7 @@ int main() {
 
     int tmp_array[MAX_SIZE];
 
-    Mul_function(tmp_array, a_number, k_number, a_size, k_size);
-
-    // Judge(a_number, k_number, a_size, k_size);
+    Judge(a_number, k_number, a_size, k_size);
 }
 
 /*
