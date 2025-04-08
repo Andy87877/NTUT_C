@@ -30,3 +30,4 @@
 | 019 | [大數除法](Homework/019.大數除法/019.md) | [019.解答](Homework/019.大數除法/019_AI.c) |
 | 020 | [骰子](Homework/020.骰子/020.md) | [020.解答](Homework/020.骰子/020.c) |
 | 021 | [排序演算法](Homework/021.排序演算法/021.md) | [021.解答](Homework/021.排序演算法/021.c) |
+| 022 | [DF-expression](Homework/022.DF-expression/022.md) | [022.解答](Homework/022.DF-expression/022.c) |
