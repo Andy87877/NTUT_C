@@ -61,8 +61,9 @@ void Print_all_color(int array[6][MAX_SIZE][MAX_SIZE]) {
 
 void judge(int array[6][MAX_SIZE][MAX_SIZE]) {
     char operater[2];
-    scanf("%s", &operater);
+    scanf("%2s", &operater);
     getchar();
+
     char operater_col = operater[0];
     char operater_row = operater[1];
 
@@ -107,13 +108,13 @@ void judge(int array[6][MAX_SIZE][MAX_SIZE]) {
             color = 5; // 綠轉
     }
 
-    if (color == 4 || color == 5) { // 橘綠轉 逆時鐘
+    if (color == 0 || color == 1) { // 紅藍 順時鐘
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 temp_array[color][i][j] = array[color][2 - j][i];
             }
         }
-    } else if (color == 0 || color == 1) { // 紅藍 順時鐘
+    } else if (color == 4 || color == 5) { // 橘綠轉 逆時鐘
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 temp_array[color][i][j] = array[color][j][2 - i];
