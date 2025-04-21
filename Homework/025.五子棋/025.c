@@ -44,15 +44,12 @@ int Judge_line(int line_array[SIZE], int size, int debug) {
                 return 1;
             }
             now_black = 0;
-        } else { // black
+        } else if (line_array[i] == 1) { // black
             now_black++;
         }
     }
-    if (now_black == 5) { // 剛好五子
-        return 1;
-    }
 
-    return 0;
+    return (now_black == 5);
 }
 
 int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
@@ -60,7 +57,7 @@ int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
     int All_line = 0;
     int debug = 0;
 
-    // if (index_i == 4 && index_j == 4) {
+    // if (index_i == 0 && index_j == 0) {
     //     // printf("0:1\n");
     //     debug = 1;
     // }
@@ -71,7 +68,7 @@ int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
     // 上下
     Array_fill_black(line_array, SIZE);
     index_begin = MAX(index_i - 5, 0);
-    index_end = MIN(index_i + 5, SIZE);
+    index_end = MIN(index_i + 6, SIZE);
     size = index_end - index_begin;
     now_index = 0;
     for (int i = index_begin; i < index_end; i++) {
@@ -83,7 +80,7 @@ int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
     // 左右
     Array_fill_black(line_array, SIZE);
     index_begin = MAX(index_j - 5, 0);
-    index_end = MIN(index_j + 5, SIZE);
+    index_end = MIN(index_j + 6, SIZE);
     size = index_end - index_begin;
     now_index = 0;
     for (int j = index_begin; j < index_end; j++) {
@@ -99,9 +96,9 @@ int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
     int now_i, now_j;
     if (diff >= 0) {
         for (int j = 0; j < 10; j++) {
-            if (j+5 <= index_j) continue;
-            if (j-5 >= index_j) break;
-            if (j + diff == 10) break;
+            if (j + 5 < index_j) continue;
+            if (j - 5 > index_j) break;
+            if (j + diff >= 10) break;
             now_i = j + diff;
             now_j = j;
             line_array[now_index] = array[now_i][now_j];
@@ -110,9 +107,9 @@ int Judge_single_coordinate(int array[SIZE][SIZE], int index_i, int index_j) {
     } else {
         diff *= -1;
         for (int i = 0; i < 10; i++) {
-            if (i+5 <= index_i) continue;
-            if (i-5 >= index_i) break;
-            if (i + diff == 10) break;
+            if (i + 5 < index_i) continue;
+            if (i - 5 > index_i) break;
+            if (i + diff >= 10) break;
             now_i = i;
             now_j = i + diff;
             line_array[now_index] = array[now_i][now_j];
