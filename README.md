@@ -33,3 +33,5 @@
 | 022 | [DF-expression](Homework/022.DF-expression/022.md) | [022.解答](Homework/022.DF-expression/022.c) |
 | 023 | [反序](Homework/023.反序/023.md) | [023.解答](Homework/023.反序/023.c) |
 | 024 | [魔術方塊](Homework/024.魔術方塊/024.md) | [024.解答](Homework/024.魔術方塊/024.c) |
+| 025 | [五子棋](Homework/025.五子棋/025.md) | [025.解答](Homework/025.五子棋/025.c) |
+| 027 | [多重單詞操作](Homework/027.多重單詞操作/027.md) | [027.解答](Homework/027.多重單詞操作/027.c) |
