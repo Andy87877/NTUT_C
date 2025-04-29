@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 1000 // 定義常數 SIZE，作為陣列大小使用
+#define SIZE 1000
 
 // 檢查現在的單字 now_string 是否符合要取代的 P_word
 int Check_replace_str(char now_string[], char P_word[], int size) {
