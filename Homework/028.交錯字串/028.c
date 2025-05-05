@@ -11,7 +11,8 @@ int Check_big_or_small(char check_char) {
     return 0; // 小寫
 }
 
-void Judge() {
+// 輸入與判斷答案
+int Judge() {
     char string[SIZE];
     string[0] = '\0';
     int k;
@@ -22,6 +23,7 @@ void Judge() {
     int times_array[SIZE], index = 0;
     int is_big_check = 0;
 
+    // 找連續大/小寫的次數
     for (int i = 0; i < strlen(string); i++) {
         char now_char = string[i];
         int is_big = Check_big_or_small(now_char);
@@ -55,36 +57,31 @@ void Judge() {
     }
     index++;
 
-    int size = index, answer = 0, tmp = 0;
+    int size = index, answer = 0;
+    int is_front_large = 0;
 
-    for (int i = 0; i < size; i++) {
-        // printf("%d ", times_array[i]);
+    if (size == 1) return 0;
 
-        int zero_flag = 0;
-        if (times_array[i] == k) {
-            tmp++;
-        } else {
-            if (times_array[i] > k) {
-                tmp++;
-            }
-            if (tmp == 1 && times_array[i] > k) { // 最前面
-                zero_flag = 0;
-            } else {
-                zero_flag = 1;
-            }
+    // 判斷答案
+    for (int i = 0; i < size; i++) { // 開頭
+        int tmp_answer = 0;
+        for (int j = i; j < size; j++) { // 結尾
+            // printf("%d ", times_array[j]);
+            if (times_array[j] < k) break;
+
+            tmp_answer++;
+            if (times_array[j] > k && j != i) break;
         }
+        // printf("\n");
 
-        if (answer < tmp && tmp != 1) {
-            answer = tmp;
-        }
-
-        if (zero_flag == 1) {
-            tmp = 0;
+        if (tmp_answer > answer && tmp_answer != 1) {
+            answer = tmp_answer;
         }
     }
+
     answer = answer * k;
 
-    printf("%d\n", answer);
+    return answer;
 }
 
 int main() {
@@ -92,6 +89,8 @@ int main() {
     scanf("%d", &times);
 
     for (int t = 0; t < times; t++) {
-        Judge();
+        int answer = 0;
+        answer = Judge();
+        printf("%d\n", answer);
     }
 }
