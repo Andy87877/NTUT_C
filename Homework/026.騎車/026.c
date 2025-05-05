@@ -37,7 +37,6 @@ int DFS(int Point_array[SIZE][SIZE], int size, int Went_array[SIZE], int count,
         int distance, int current_city, int start_city, int Route_array[SIZE],
         int Temp_route[SIZE]) {
     Temp_route[count] = current_city;
-    printf("%d  ", current_city);
 
     if (count == size) {
         Print_Route_array(Temp_route, count);
@@ -49,10 +48,10 @@ int DFS(int Point_array[SIZE][SIZE], int size, int Went_array[SIZE], int count,
             for (int i = 0; i <= size; i++) {
                 Route_array[i] = Temp_route[i];
             }
-            Print_Route_array(Route_array, size);
             return total_distance;
         }
     }
+    Print_Route_array(Route_array, size);
 
     int min_dist = INT_MAX;
 
