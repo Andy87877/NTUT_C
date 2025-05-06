@@ -26,6 +26,11 @@ void judge(int mode) {
     scanf("%d %d %d %d", &a, &p, &q, &err);
 
     longd T, h;
+
+    int delta = 0;
+    while (1){
+
+    }
 }
 
 int main() {
