@@ -9,6 +9,7 @@
         "vector": "c",
         "xstring": "c",
         "tuple": "c",
-        "utility": "c"
+        "utility": "c",
+        "system_error": "c"
     }
 }
