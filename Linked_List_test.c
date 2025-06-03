@@ -69,3 +69,15 @@ int main() {
 
     return 0;
 }
+
+bool dequeue(nodep_t *p_head, nodep_t *p_tail, int *data) {
+    if ((*p_head) == NULL) return false;
+    (*data) = (*p_head)->data;
+    nodep_t current = (*p_head);
+    if ((*p_head) == (*p_tail))
+        (*p_head) = (*p_tail) = NULL;
+    else
+        (*p_head) = (*p_head)->next;
+    free(current);
+    return true;
+}
