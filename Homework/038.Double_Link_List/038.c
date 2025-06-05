@@ -1,5 +1,3 @@
-// 038. Double Link List
-//  node_front <-- 0 1 2 3 4 5 6 7 8 9 10 --> node_back
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,28 +7,29 @@ typedef struct dnode_s {
         struct dnode_s* front;
         struct dnode_s* back;
 } node_t;
+
 typedef node_t* nodep_t;
 
-//  node_front <-- 0 1 2 3 4 5 6 7 8 9 10 --> node_back
-
-int size;
 nodep_t node_front = NULL;
 nodep_t node_back = NULL;
+int size = 0;
 
 nodep_t create_node(int data) {
     nodep_t new_node = (nodep_t)malloc(sizeof(node_t));
-
+    if (new_node == NULL) {
+        exit(EXIT_FAILURE);
+    }
     new_node->data = data;
     new_node->front = NULL;
     new_node->back = NULL;
-
     return new_node;
 }
 
-void addFront(int data) { // 往前加
+// 1. addFront: 將資料放入串列前端
+void addFront(int data) {
     nodep_t new_node = create_node(data);
 
-    if (size == 0) {
+    if (node_front == NULL) {
         node_front = new_node;
         node_back = new_node;
     } else {
@@ -38,14 +37,12 @@ void addFront(int data) { // 往前加
         node_front->front = new_node;
         node_front = new_node;
     }
-
     size++;
 }
 
-void addBack(int data) { // 往後加
+void addBack(int data) {
     nodep_t new_node = create_node(data);
-
-    if (size == 0) {
+    if (node_front == NULL) {
         node_front = new_node;
         node_back = new_node;
     } else {
@@ -53,47 +50,72 @@ void addBack(int data) { // 往後加
         node_back->back = new_node;
         node_back = new_node;
     }
-
     size++;
 }
 
-int check_empty() { // 檢查是不是空的
-    if (size == 0) {
+// 3. removeFront: 將最前端的節點刪除
+void removeFront() {
+    if (node_front == NULL) { // 串列為空
         printf("Double link list is empty\n");
-        return 1;
+        return;
     }
-    return 0;
-}
-
-void removeFront() { // 往前刪除
-    if (check_empty()) return;
-
-    node_front = node_front->back;
-    node_front->front = NULL;
-
+    nodep_t temp = node_front;
+    if (node_front == node_back) {
+        node_front = NULL;
+        node_back = NULL;
+    } else {
+        node_front = node_front->back;
+        node_front->front = NULL;
+    }
+    free(temp);
     size--;
 }
 
-void removeBack() { // 往後刪除
-    if (check_empty()) return;
-
-    node_back = node_back->front;
-    node_back->back = NULL;
-
+// 4. removeBack: 將最尾端的節點刪除
+void removeBack() {
+    if (node_front == NULL) {
+        printf("Double link list is empty\n");
+        return;
+    }
+    nodep_t temp = node_back;
+    if (node_front == node_back) {
+        node_front = NULL;
+        node_back = NULL;
+    } else {
+        node_back = node_back->front;
+        node_back->back = NULL;
+    }
+    free(temp);
     size--;
 }
 
-void empty() {
-    if (check_empty()) return;
-
+// 5. empty: 將串列中所有節點刪除
+void empty_list() {
+    if (node_front == NULL) {
+        printf("Double link list is empty\n");
+        return;
+    }
+    nodep_t current = node_front;
+    nodep_t next_node;
+    while (current != NULL) {
+        next_node = current->back;
+        free(current);
+        current = next_node;
+    }
     node_front = NULL;
     node_back = NULL;
     size = 0;
 }
 
-void insert_node(int data, int n) {
+// 6. insert n data: 在第n個節點後插入新的資料
+void insert_node(int n, int data) {
     if (n < 1 || n > size) {
         printf("Invalid command\n");
+        return;
+    }
+
+    if (n == size) {
+        addBack(data);
         return;
     }
 
@@ -113,9 +135,20 @@ void insert_node(int data, int n) {
     size++;
 }
 
+// 7. remove n: 刪除第n個節點
 void remove_node(int n) {
     if (n < 1 || n > size) {
         printf("Invalid command\n");
+        return;
+    }
+
+    if (n == 1) {
+        removeFront();
+        return;
+    }
+
+    if (n == size) {
+        removeBack();
         return;
     }
 
@@ -127,20 +160,22 @@ void remove_node(int n) {
     current->front->back = current->back;
     current->back->front = current->front;
 
+    free(current);
     size--;
 }
 
+// 8. print: 將串列中所有節點資料從前端到尾端依序輸出
 void print_list() {
-    if (check_empty()) return;
+    if (node_front == NULL) {
+        printf("Double link list is empty\n");
+        return;
+    }
     nodep_t current = node_front;
-
     while (current != NULL) {
         printf("%d\n", current->data);
         current = current->back;
     }
 }
-
-//  node_front <-- 0 1 2 3 4 5 6 7 8 9 10 --> node_back
 
 int main() {
     int do_times = 0;
@@ -150,7 +185,7 @@ int main() {
     for (int t = 0; t < do_times; t++) {
         char type[20];
         getchar();
-        scanf("%s", &type);
+        scanf("%s", type);
         int data, index;
 
         if (strcmp(type, "addFront") == 0) {
@@ -168,11 +203,11 @@ int main() {
             removeBack();
         }
         if (strcmp(type, "empty") == 0) {
-            empty();
+            empty_list();
         }
         if (strcmp(type, "insert") == 0) {
-            scanf("%d %d", &data, &index);
-            insert_node(data, index);
+            scanf("%d %d", &index, &data);
+            insert_node(index, data);
         }
         if (strcmp(type, "remove") == 0) {
             scanf("%d", &index);
@@ -181,5 +216,7 @@ int main() {
         if (strcmp(type, "print") == 0) {
             print_list();
         }
+        // printf("times: %d, size: %d\n", t, size);
+        // print_list_test();
     }
 }
