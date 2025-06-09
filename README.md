@@ -60,3 +60,14 @@
 - df-expression
 - 分數四則運算
 - 籃球比賽
+
+## 期末上機考考題
+
+1. 五子棋
+2. 騎車到各城市 Linked list
+3. 積分計算
+4. structure function point 邏輯電路圖
+5. 專案時程 Linked list
+6. 建構唯一二元樹+刪除節點
+7. 字串處理多重單詞操作
+8. double link list 操作
