@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 1000
 
 typedef struct node_s {
         char data;
@@ -43,7 +43,7 @@ btree front_middle_route(char front_input[], char middle_input[],
     char front_name = front_input[front_begin];
     int mid_index = 0; // 找到根節點的位置
     mid_index = find_mid_index(middle_input, mid_begin, mid_end, front_name);
-    printf("%c %d %d\n", front_name, mid_index, front_begin);
+    // printf("%c %d %d\n", front_name, mid_index, front_begin);
 
     btree now_tree = create_node(front_name);
 
@@ -66,11 +66,31 @@ btree front_middle_route(char front_input[], char middle_input[],
 // 後序和中序
 btree back_middle_route(char back_input[], char middle_input[], int back_begin,
                         int back_end, int mid_begin, int mid_end) {
-    
-    char back_name = back_input[back_end];
-    btree now_tree = create_node()
-                        }
+    if (back_begin > back_end || mid_begin > mid_end) {
+        return NULL;
+    }
 
+    char back_name = back_input[back_end];
+    btree now_tree = create_node(back_name);
+
+    int mid_index = 0;
+    mid_index = find_mid_index(middle_input, mid_begin, mid_end, back_name);
+
+    // printf("%d %d %d %c\n", mid_begin, mid_end, mid_index, back_name);
+
+    int left_size = mid_index - mid_begin;
+
+    now_tree->left =
+        back_middle_route(back_input, middle_input, back_begin,
+                          back_begin + left_size - 1, mid_begin, mid_index - 1);
+    now_tree->right =
+        back_middle_route(back_input, middle_input, back_begin + left_size,
+                          back_end - 1, mid_index + 1, mid_end);
+
+    return now_tree;
+}
+
+// 輸出tree
 void Print_tree(btree tree, int size) {
     btree array[MAX_SIZE];
     int print_index = 0, now_index = 0;
@@ -112,16 +132,16 @@ int main() {
 
     if (type_1 == 'I') {
         if (type_2 == 'P') {
-            tree = front_middle_route(input_2, input_1, 0, len_2, 0, len_1);
+            tree = front_middle_route(input_2, input_1, 0, len_2 - 1, 0, len_1);
         } else {
-            tree = back_middle_route(input_2, input_1, 0, len_2, 0, len_1);
+            tree = back_middle_route(input_2, input_1, 0, len_2 - 1, 0, len_1);
         }
     } else {
         // type_2 是中序
         if (type_1 == 'P') {
-            tree = front_middle_route(input_1, input_2, 0, len_1, 0, len_2);
+            tree = front_middle_route(input_1, input_2, 0, len_1 - 1, 0, len_2);
         } else {
-            tree = back_middle_route(input_1, input_2, 0, len_1, 0, len_2);
+            tree = back_middle_route(input_1, input_2, 0, len_1 - 1, 0, len_2);
         }
     }
 
