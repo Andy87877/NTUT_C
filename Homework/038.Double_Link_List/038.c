@@ -177,6 +177,19 @@ void print_list() {
     }
 }
 
+void print_list_test() {
+    if (node_front == NULL) {
+        printf("Double link list is empty\n");
+        return;
+    }
+    nodep_t current = node_front;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->back;
+    }
+    printf("\n");
+}
+
 int main() {
     int do_times = 0;
     size = 0;
@@ -217,6 +230,6 @@ int main() {
             print_list();
         }
         // printf("times: %d, size: %d\n", t, size);
-        // print_list_test();
+        print_list_test();
     }
 }

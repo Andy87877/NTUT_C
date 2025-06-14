@@ -3,9 +3,9 @@
 #include <string.h>
 
 typedef struct node_s {
-    int data;
-    struct node_s *front;
-    struct node_s *back;
+        int data;
+        struct node_s *front;
+        struct node_s *back;
 } node_t;
 
 typedef node_t *nodep_t;
@@ -114,16 +114,12 @@ void empty() {
 // head (front 0 1 2 3 4 5 6 back ) tail
 
 void insert(int n, int data) {
-    if (n <= 0 || n > size + 1) { // n can be size + 1 to add at back
+    if (n <= 0 || n > size) { // n can be size + 1 to add at back
         printf("Invalid command\n");
         return;
     }
 
-    if (n == 1) {
-        addFront(data);
-        return;
-    }
-    if (n == size + 1) { // Insert at the end
+    if (n == size) { // Insert at the end
         addBack(data);
         return;
     }
@@ -132,7 +128,7 @@ void insert(int n, int data) {
     nodep_t current = head;
 
     // Traverse to the node *before* the insertion point
-    for (int i = 1; i < n - 1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         current = current->back;
     }
 
@@ -140,7 +136,8 @@ void insert(int n, int data) {
     // new_node will be inserted between 'current' and 'current->back'
     new_node->back = current->back;
     new_node->front = current;
-    current->back->front = new_node; // Connect the next node's front to new_node
+    current->back->front =
+        new_node; // Connect the next node's front to new_node
     current->back = new_node;
 
     size++;
@@ -194,11 +191,6 @@ void print_list_forward() { // Renamed to avoid conflict with print keyword
 void print_all() { // Renamed to print_list_summary for clarity
     nodep_t current = head;
 
-    if (size == 0) {
-        printf("List is empty.\n");
-        return;
-    }
-
     while (current != NULL) {
         printf("%d ", current->data);
         current = current->back;
@@ -218,7 +210,8 @@ int main() {
         if (strcmp(input_type, "addFront") == 0) {
             scanf("%d", &data);
             addFront(data);
-        } else if (strcmp(input_type, "addBack") == 0) { // Use else if for efficiency
+        } else if (strcmp(input_type, "addBack") ==
+                   0) { // Use else if for efficiency
             scanf("%d", &data);
             addBack(data);
         } else if (strcmp(input_type, "removeFront") == 0) {
@@ -239,9 +232,9 @@ int main() {
 
         print_all(); // Print the current state of the list after each operation
     }
-    
+
     // Clean up memory before exiting
-    empty(); 
+    empty();
 
     return 0;
 }
