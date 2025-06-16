@@ -1,5 +1,3 @@
-#if 0
-
 #include <Stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -94,4 +92,3 @@ int main()
 	PrintTree(tree);
 }
 
-#endif

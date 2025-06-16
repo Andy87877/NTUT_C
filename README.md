@@ -48,6 +48,8 @@
 | 037 | [Stack&Queue](Homework/037.Stack&Queue/037.md) | [037.本人解答](Homework/037.Stack&Queue/037.c) |
 | 038 | [Double_Link_List](Homework/038.Double_Link_List/038.md) | [038.本人解答](Homework/038.Double_Link_List/038.c) |
 | 039 | [圖形結構](Homework/039.圖形結構/039.md) | [039.本人解答](Homework/039.圖形結構/039.c) |
+| 040 | [唯一二元樹](Homework/040.唯一二元樹/040.md) | [040.本人解答](Homework/040.唯一二元樹/040.c) |
+| 041 | [課程教室排程](Homework/041.課程教室排程/041.md) | [041.本人解答](Homework/041.課程教室排程/041.c) |
 
 ---
 
