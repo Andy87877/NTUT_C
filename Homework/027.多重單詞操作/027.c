@@ -67,7 +67,7 @@ void Get_str_vector(char string_vector[][SIZE], char original_string[],
             now_string_index = 0;
         } else {
             now_string[now_string_index] = now_char;
-            now_string[now_string_index + 1] = '\0'; // 記得加上結尾字元
+            now_string[now_string_index + 1] = '\0'; 
             now_string_index++;
         }
     }
