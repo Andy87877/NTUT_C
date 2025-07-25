@@ -12,8 +12,7 @@
 - [成績摘要](#成績摘要)
 - [作業列表](#作業列表)
 - [考試與練習題](#考試與練習題)
-- [聯絡資訊](#聯絡資訊)
-
+- [檔案結構](#檔案結構)
 課程連結：[點此前往](https://academic.ntut.edu.tw/jykuo/main/11339/17656/normalPost)
 
 ---
@@ -116,11 +115,8 @@ NTUT_Program/
 ├── Unit_test/        # 單元測試程式
 ├── 期末考練習/       # 期末考練習題
 ├── 考試題目/         # 小考與上機考的考題PDF
-├── final_list.md
-├── Linked_List_test.c
 ├── README.md
 ```
-
 
 ---
 
